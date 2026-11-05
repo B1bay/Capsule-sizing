@@ -12,26 +12,6 @@
 (function () {
   "use strict";
 
-  // Theme descriptions for the Hub (Swiss Clinical) and each Company Brand Theme
-  const THEME_METADATA = {
-    "style-1": {
-      badge: "Swiss Clinical",
-      desc: "High-contrast technical grid with crisp structural borders and monospace specification readouts."
-    },
-    "capsuline": {
-      badge: "Capsuline Theme",
-      desc: "Clinical navy, royal blue, and aqua palette matched to Capsuline brand specifications."
-    },
-    "capsule-depot": {
-      badge: "Capsule Depot Theme",
-      desc: "Botanical leaf green, deep depot navy, and teal palette matched to Capsule Depot branding."
-    },
-    "pet-caps": {
-      badge: "Pet Caps Theme",
-      desc: "Warm terracotta orange, golden amber, and cream palette matched to PetCaps veterinary branding."
-    }
-  };
-
   // Application State
   const state = {
     theme: "style-1",
@@ -44,8 +24,7 @@
 
   // DOM Elements
   const htmlEl = document.documentElement;
-  const activeStyleBadge = document.getElementById("activeStyleBadge");
-  const activeStyleDesc = document.getElementById("activeStyleDesc");
+  const appHeader = document.getElementById("appHeader");
 
   const brandHomeBtn = document.getElementById("brandHomeBtn");
   const crumbHub = document.getElementById("crumbHub");
@@ -229,10 +208,6 @@
     const activeThemeKey = state.activeCompanyId || "style-1";
     state.theme = activeThemeKey;
     htmlEl.setAttribute("data-theme", activeThemeKey);
-
-    const meta = THEME_METADATA[activeThemeKey] || THEME_METADATA["style-1"];
-    if (activeStyleBadge) activeStyleBadge.textContent = meta.badge;
-    if (activeStyleDesc) activeStyleDesc.textContent = meta.desc;
   }
 
   function updateView() {
@@ -729,6 +704,26 @@
   // EVENT LISTENERS
   // ==========================================================================
   function bindEvents() {
+    // 0. Auto-hide App Header on scroll down, reveal on scroll up
+    let lastScrollY = window.scrollY || 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        const currentScrollY = window.scrollY || 0;
+        if (!appHeader) return;
+
+        if (currentScrollY <= 20) {
+          appHeader.classList.remove("header-hidden");
+        } else if (currentScrollY > lastScrollY + 4) {
+          appHeader.classList.add("header-hidden");
+        } else if (currentScrollY < lastScrollY - 4) {
+          appHeader.classList.remove("header-hidden");
+        }
+        lastScrollY = currentScrollY;
+      },
+      { passive: true }
+    );
+
     // 1. Hub Card Selection
     companyCardsContainer.addEventListener("click", (e) => {
       const card = e.target.closest(".company-card");

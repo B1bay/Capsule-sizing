@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- TOP STYLE SWITCHER & NAVIGATION BAR -->
-  <header class="app-header">
+  <!-- TOP NAVIGATION BAR (Auto-hides on scroll down, reappears on scroll up) -->
+  <header class="app-header" id="appHeader">
     <div class="header-inner">
       <div class="brand-area" id="brandHomeBtn" role="button" tabindex="0" title="Return to Company Hub">
         <div class="brand-mark">
@@ -26,16 +26,7 @@
           <span class="brand-meta">Sizing, Weight &amp; Bag Specifications</span>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- CONTEXT & BREADCRUMB BAR -->
-  <div class="style-context-bar">
-    <div class="style-context-inner">
-      <div class="style-context-info">
-        <span class="context-tag" id="activeStyleBadge">Swiss Clinical</span>
-        <span class="context-desc" id="activeStyleDesc">High-contrast technical grid with crisp structural borders and monospace specification readouts.</span>
-      </div>
       <div class="breadcrumb-nav" id="breadcrumbNav">
         <button type="button" class="crumb-link active" id="crumbHub">Company Hub</button>
         <span class="crumb-sep hidden" id="crumbSepCompany">/</span>
@@ -44,7 +35,7 @@
         <span class="crumb-current hidden" id="crumbSize"></span>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- MAIN WORKSPACE -->
   <main class="main-container">
@@ -63,35 +54,6 @@
 
       <div class="company-hub-grid" id="companyCardsContainer">
         <!-- Rendered dynamically from CAPSULE_DATA -->
-      </div>
-
-      <div class="hub-quick-guide">
-        <div class="guide-header">
-          <h2>How to Use This Reference</h2>
-        </div>
-        <div class="guide-steps">
-          <div class="guide-step">
-            <span class="step-index">01</span>
-            <div>
-              <h3>Select Company</h3>
-              <p>Open Capsuline, Capsule Depot, or Pet Caps to load its dedicated sizing chart.</p>
-            </div>
-          </div>
-          <div class="guide-step">
-            <span class="step-index">02</span>
-            <div>
-              <h3>Dropdown or Dedicated View</h3>
-              <p>Click the side arrow on any size to preview quantities in a dropdown, or click the size row to view only that size.</p>
-            </div>
-          </div>
-          <div class="guide-step">
-            <span class="step-index">03</span>
-            <div>
-              <h3>Isolate &amp; Quick Search</h3>
-              <p>Click any quantity to isolate it on screen, or type <code>S 00 Q 5000</code> in the search bar for instant lookup.</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 

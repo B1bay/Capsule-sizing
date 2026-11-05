@@ -241,7 +241,7 @@ code {
 }
 
 /* ============================================================================
-   TOP HEADER
+   TOP HEADER (Auto-hides on scroll down, reappears on scroll up)
    ============================================================================ */
 .app-header {
   background: var(--bg-header);
@@ -250,6 +250,12 @@ code {
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease;
+  will-change: transform;
+}
+
+.app-header.header-hidden {
+  transform: translateY(-100%);
 }
 
 .header-inner {
@@ -300,78 +306,39 @@ code {
   opacity: 0.8;
 }
 
-/* ============================================================================
-   STYLE CONTEXT & BREADCRUMB BAR
-   ============================================================================ */
-.style-context-bar {
-  background-color: var(--bg-surface-alt);
-  border-bottom: 1px solid var(--border-std);
-  font-size: 0.82rem;
-}
-
-.style-context-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.55rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.style-context-info {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: var(--text-secondary);
-}
-
-.context-tag {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 0.12rem 0.45rem;
-  background-color: var(--accent-subtle);
-  color: var(--accent-text);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-std);
-}
-
 .breadcrumb-nav {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
 .crumb-link {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.78);
   cursor: pointer;
-  padding: 0.1rem 0.25rem;
+  padding: 0.15rem 0.35rem;
   border-radius: var(--radius-sm);
   font-weight: 500;
 }
 
 .crumb-link:hover {
-  color: var(--text-primary);
+  color: #FFFFFF;
   text-decoration: underline;
 }
 
 .crumb-link.active {
-  color: var(--text-primary);
+  color: #FFFFFF;
   font-weight: 600;
 }
 
 .crumb-sep {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .crumb-current {
-  color: var(--accent-text);
+  color: #FFFFFF;
   font-weight: 600;
 }
 
