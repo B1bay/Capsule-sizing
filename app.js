@@ -90,50 +90,44 @@
     let qtyFilter = null;
 
     // Normalize commas in numbers (e.g., 5,000 -> 5000)
-    const norm = cleaned.replace(/,/g, "");
+    let working = cleaned.replace(/,/g, "");
 
-    // Check explicit S <size> and Q <quantity> tokens
-    const sMatch = norm.match(/(?:^|\s)s(?:ize)?\s*[:=-]?\s*(000|00e|00|0|[1-5])(?=\s|$|q)/i);
-    const qMatch = norm.match(/(?:^|\s)q(?:ty|uantity)?\s*[:=-]?\s*(\d+)(?=\s|$)/i);
-
+    // 1. Check explicit S <size> / Size <size> token
+    const sRegex = /(?:^|\s)s(?:ize)?\s*[:=-]?\s*(000|00e|00|0|[1-5])(?=\s|$|q)/i;
+    const sMatch = working.match(sRegex);
     if (sMatch) {
       sizeFilter = sMatch[1].toUpperCase();
+      working = working.replace(sMatch[0], " ");
     }
+
+    // 2. Check explicit Q <quantity> / Qty <quantity> / Quantity <quantity> token
+    const qRegex = /(?:^|\s)q(?:ty|uantity)?\s*[:=-]?\s*(\d+)(?=\s|$)/i;
+    const qMatch = working.match(qRegex);
     if (qMatch) {
       qtyFilter = qMatch[1];
+      working = working.replace(qMatch[0], " ");
     }
 
-    // If neither explicit S nor Q prefix was used, parse natural tokens
-    if (!sMatch && !qMatch) {
-      const stripped = norm.replace(/^size\s+/i, "").trim();
-      const tokens = stripped.split(/\s+/);
+    // 3. Parse any remaining natural tokens (handles "S 0 1000", "0 Q 1000", "0 1000", "1000 0", "size 0 1000")
+    const remainingTokens = working
+      .replace(/\b(size|qty|quantity)\b/gi, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
 
-      if (tokens.length === 1) {
-        const t = tokens[0].toUpperCase();
-        // Known capsule sizes: 000, 00E, 00, 0, 1, 2, 3, 4, 5
-        if (["000", "00E", "00", "0", "1", "2", "3", "4", "5"].includes(t)) {
-          sizeFilter = t;
-        } else if (/^\d+$/.test(t)) {
-          qtyFilter = t;
-        } else {
-          sizeFilter = t;
-        }
-      } else if (tokens.length >= 2) {
-        const first = tokens[0].toUpperCase();
-        const second = tokens[1];
-        if (["000", "00E", "00", "0", "1", "2", "3", "4", "5"].includes(first)) {
-          sizeFilter = first;
-          if (/^\d+$/.test(second)) {
-            qtyFilter = second;
-          }
-        } else if (/^\d+$/.test(first)) {
-          qtyFilter = first;
-        }
+    const validSizes = ["000", "00E", "00", "0", "1", "2", "3", "4", "5"];
+
+    for (const token of remainingTokens) {
+      const upper = token.toUpperCase();
+      if (!sizeFilter && validSizes.includes(upper)) {
+        sizeFilter = upper;
+      } else if (!qtyFilter && /^\d+$/.test(token)) {
+        qtyFilter = token;
       }
     }
 
     return {
-      active: true,
+      active: Boolean(sizeFilter || qtyFilter),
       sizeFilter,
       qtyFilter,
       raw: cleaned
@@ -338,23 +332,24 @@
       modeStatusBar.classList.add("hidden");
     }
 
-    // Filter sizes & quantities according to search query
+    // Filter sizes & quantities according to search query (exact match only)
+    const effectiveSizeFilter = parsedSearch.sizeFilter || state.dedicatedSize;
     const filteredSizes = [];
     company.sizes.forEach((sizeObj) => {
       const matchesSize =
-        !parsedSearch.sizeFilter ||
-        sizeObj.size.toUpperCase() === parsedSearch.sizeFilter.toUpperCase();
+        !effectiveSizeFilter ||
+        sizeObj.size.toUpperCase() === effectiveSizeFilter.toUpperCase();
 
       if (!matchesSize) return;
 
       const matchingItems = sizeObj.items.filter((item) => {
         if (!parsedSearch.qtyFilter) return true;
-        return String(item.quantity) === String(parsedSearch.qtyFilter);
+        return Number(item.quantity) === Number(parsedSearch.qtyFilter);
       });
 
       const matchingSeparated = (sizeObj.separated || []).filter((sep) => {
         if (!parsedSearch.qtyFilter) return true;
-        return String(sep.quantity) === String(parsedSearch.qtyFilter);
+        return Number(sep.quantity) === Number(parsedSearch.qtyFilter);
       });
 
       if (matchingItems.length > 0 || matchingSeparated.length > 0) {
@@ -796,6 +791,62 @@
       // Exit isolated view when user types in search bar so they immediately see matching size & dropdown
       state.isolatedItem = null;
       updateView();
+    });
+
+    // Pressing Enter in the search bar locks onto the exact quantity/size looked for
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        state.searchQuery = searchInput.value;
+        const parsed = parseSearchQuery(state.searchQuery);
+        if (!parsed.active || !state.activeCompanyId) {
+          updateView();
+          return;
+        }
+
+        const company = CAPSULE_DATA[state.activeCompanyId];
+        const targetSizeCode = parsed.sizeFilter || state.dedicatedSize;
+
+        // Find matching items across the target size (or all sizes if no size specified)
+        const matches = [];
+        company.sizes.forEach((sizeObj) => {
+          if (targetSizeCode && sizeObj.size.toUpperCase() !== targetSizeCode.toUpperCase()) {
+            return;
+          }
+          if (parsed.qtyFilter) {
+            sizeObj.items.forEach((item) => {
+              if (Number(item.quantity) === Number(parsed.qtyFilter)) {
+                matches.push({ size: sizeObj.size, label: sizeObj.label, isSeparated: false, item });
+              }
+            });
+            if (matches.length === 0 && sizeObj.separated) {
+              sizeObj.separated.forEach((sep) => {
+                if (Number(sep.quantity) === Number(parsed.qtyFilter)) {
+                  matches.push({ size: sizeObj.size, label: sizeObj.label, isSeparated: true, item: sep });
+                }
+              });
+            }
+          }
+        });
+
+        // If a single exact quantity match is found (or size + quantity specified), isolate that exact one
+        if (matches.length === 1) {
+          state.isolatedItem = matches[0];
+          searchInput.blur();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (parsed.sizeFilter && !parsed.qtyFilter) {
+          // If only a size was searched and Enter pressed, open that dedicated size
+          const matchedSize = company.sizes.find(
+            (s) => s.size.toUpperCase() === parsed.sizeFilter.toUpperCase()
+          );
+          if (matchedSize) {
+            state.dedicatedSize = matchedSize.size;
+            state.isolatedItem = null;
+            searchInput.blur();
+          }
+        }
+        updateView();
+      }
     });
 
     clearSearchBtn.addEventListener("click", () => {
