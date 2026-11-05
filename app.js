@@ -349,12 +349,12 @@
 
       const matchingItems = sizeObj.items.filter((item) => {
         if (!parsedSearch.qtyFilter) return true;
-        return String(item.quantity).startsWith(String(parsedSearch.qtyFilter));
+        return String(item.quantity) === String(parsedSearch.qtyFilter);
       });
 
       const matchingSeparated = (sizeObj.separated || []).filter((sep) => {
         if (!parsedSearch.qtyFilter) return true;
-        return String(sep.quantity).startsWith(String(parsedSearch.qtyFilter));
+        return String(sep.quantity) === String(parsedSearch.qtyFilter);
       });
 
       if (matchingItems.length > 0 || matchingSeparated.length > 0) {
@@ -704,22 +704,46 @@
   // EVENT LISTENERS
   // ==========================================================================
   function bindEvents() {
-    // 0. Auto-hide App Header on scroll down, reveal on scroll up
+    // 0. Smooth Auto-hide App Header on intentional scroll down, reveal on scroll up
     let lastScrollY = window.scrollY || 0;
+    let scrollDeltaAccum = 0;
+    let ticking = false;
+
     window.addEventListener(
       "scroll",
       () => {
-        const currentScrollY = window.scrollY || 0;
-        if (!appHeader) return;
+        if (ticking) return;
+        ticking = true;
 
-        if (currentScrollY <= 20) {
-          appHeader.classList.remove("header-hidden");
-        } else if (currentScrollY > lastScrollY + 4) {
-          appHeader.classList.add("header-hidden");
-        } else if (currentScrollY < lastScrollY - 4) {
-          appHeader.classList.remove("header-hidden");
-        }
-        lastScrollY = currentScrollY;
+        window.requestAnimationFrame(() => {
+          const currentScrollY = Math.max(0, window.scrollY || 0);
+          const delta = currentScrollY - lastScrollY;
+
+          if (appHeader) {
+            if (currentScrollY <= 30) {
+              appHeader.classList.remove("header-hidden");
+              scrollDeltaAccum = 0;
+            } else {
+              // Reset accumulator when scroll direction reverses
+              if ((delta > 0 && scrollDeltaAccum < 0) || (delta < 0 && scrollDeltaAccum > 0)) {
+                scrollDeltaAccum = 0;
+              }
+              scrollDeltaAccum += delta;
+
+              // Require a sustained downward scroll (> 32px) past 64px before hiding smoothly
+              if (scrollDeltaAccum > 32 && currentScrollY > 64) {
+                appHeader.classList.add("header-hidden");
+                scrollDeltaAccum = 0;
+              } else if (scrollDeltaAccum < -16) {
+                appHeader.classList.remove("header-hidden");
+                scrollDeltaAccum = 0;
+              }
+            }
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
       },
       { passive: true }
     );
@@ -855,8 +879,8 @@
         const parsed = parseSearchQuery(state.searchQuery);
         let sourceList = isSep ? sizeObj.separated : sizeObj.items;
         if (parsed.active && parsed.qtyFilter && !state.dedicatedSize) {
-          sourceList = sourceList.filter((item) =>
-            String(item.quantity).startsWith(String(parsed.qtyFilter))
+          sourceList = sourceList.filter(
+            (item) => String(item.quantity) === String(parsed.qtyFilter)
           );
         }
 
