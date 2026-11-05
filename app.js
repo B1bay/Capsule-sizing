@@ -12,19 +12,23 @@
 (function () {
   "use strict";
 
-  // Style descriptions for the top preview context bar
-  const STYLE_METADATA = {
+  // Theme descriptions for the Hub (Swiss Clinical) and each Company Brand Theme
+  const THEME_METADATA = {
     "style-1": {
-      badge: "Style 01 · Swiss Clinical",
+      badge: "Swiss Clinical",
       desc: "High-contrast technical grid with crisp structural borders and monospace specification readouts."
     },
-    "style-2": {
-      badge: "Style 02 · Executive Slate",
-      desc: "Dark industrial slate workspace with warm bronze accents designed for low-glare warehouse and desktop use."
+    "capsuline": {
+      badge: "Capsuline Theme",
+      desc: "Clinical navy, royal blue, and aqua palette matched to Capsuline brand specifications."
     },
-    "style-3": {
-      badge: "Style 03 · Warm Apothecary",
-      desc: "Editorial parchment palette with serif headers and deep botanical tones for a refined catalog aesthetic."
+    "capsule-depot": {
+      badge: "Capsule Depot Theme",
+      desc: "Botanical leaf green, deep depot navy, and teal palette matched to Capsule Depot branding."
+    },
+    "pet-caps": {
+      badge: "Pet Caps Theme",
+      desc: "Warm terracotta orange, golden amber, and cream palette matched to PetCaps veterinary branding."
     }
   };
 
@@ -40,7 +44,6 @@
 
   // DOM Elements
   const htmlEl = document.documentElement;
-  const styleBtns = document.querySelectorAll(".style-btn");
   const activeStyleBadge = document.getElementById("activeStyleBadge");
   const activeStyleDesc = document.getElementById("activeStyleDesc");
 
@@ -222,7 +225,20 @@
   // ==========================================================================
   // MAIN VIEW UPDATER
   // ==========================================================================
+  function applyActiveTheme() {
+    const activeThemeKey = state.activeCompanyId || "style-1";
+    state.theme = activeThemeKey;
+    htmlEl.setAttribute("data-theme", activeThemeKey);
+
+    const meta = THEME_METADATA[activeThemeKey] || THEME_METADATA["style-1"];
+    if (activeStyleBadge) activeStyleBadge.textContent = meta.badge;
+    if (activeStyleDesc) activeStyleDesc.textContent = meta.desc;
+  }
+
   function updateView() {
+    // 0. Apply Hub (Swiss Clinical) or Company-specific theme & background logo
+    applyActiveTheme();
+
     // 1. Update Breadcrumbs
     updateBreadcrumbs();
 
@@ -713,28 +729,7 @@
   // EVENT LISTENERS
   // ==========================================================================
   function bindEvents() {
-    // 1. Style Switcher (3 Distinct Professional Styles)
-    styleBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const chosen = btn.dataset.style;
-        state.theme = chosen;
-        htmlEl.setAttribute("data-theme", chosen);
-
-        styleBtns.forEach((b) => {
-          const active = b.dataset.style === chosen;
-          b.classList.toggle("active", active);
-          b.setAttribute("aria-selected", String(active));
-        });
-
-        const meta = STYLE_METADATA[chosen];
-        if (meta) {
-          activeStyleBadge.textContent = meta.badge;
-          activeStyleDesc.textContent = meta.desc;
-        }
-      });
-    });
-
-    // 2. Hub Card Selection
+    // 1. Hub Card Selection
     companyCardsContainer.addEventListener("click", (e) => {
       const card = e.target.closest(".company-card");
       if (!card) return;

@@ -10,6 +10,7 @@ const CAPSULE_DATA = {
     name: "Capsuline",
     subtitle: "Standard & Separated Capsule Packaging Specifications",
     badge: "Primary Catalog",
+    bgImage: "assets/capsuline-bg.jpg",
     hasSeparated: true,
     note: null,
     sizes: [
@@ -23,9 +24,9 @@ const CAPSULE_DATA = {
           { quantity: 1000, weight: "4.2 oz", packaging: "8x10 Blue" },
           { quantity: 5000, weight: "1.2 lb", packaging: "13x15" },
           { quantity: 10000, weight: "2.5 lb", packaging: "18x20" },
-          { quantity: 25000, weight: "55 lb", packaging: "Large Bag" },
+          { quantity: 25000, weight: "5.5 lb", packaging: "Large Bag" },
           { quantity: 50000, weight: "11 lb", packaging: "Large Bag" },
-          { quantity: 100000, weight: "22 lb", packaging: "Large Bag" }
+          { quantity: 100000, weight: "30 lb", packaging: "Large Bag" }
         ],
         separated: [
           { quantity: 1000, bodyWeight: "3 oz", bodyBag: "8x10", capWeight: "2.1 oz", capBag: "7x8" },
@@ -39,7 +40,7 @@ const CAPSULE_DATA = {
         label: "Size 00",
         items: [
           { quantity: 100, weight: "0.9 oz", packaging: "Small Silver" },
-          { quantity: 500, weight: "2.9 oz", packaging: "8x10 Blue (7x8 Short)" },
+          { quantity: 500, weight: "2.9 oz", packaging: "8x10 Blue" },
           { quantity: 1000, weight: "5.2 oz", packaging: "10x12 Blue" },
           { quantity: 5000, weight: "1.5 lb", packaging: "18x20" },
           { quantity: 10000, weight: "3 lb", packaging: "18x20" },
@@ -82,8 +83,7 @@ const CAPSULE_DATA = {
           { quantity: 1000, weight: "3.4 oz", packaging: "8x10 Blue" },
           { quantity: 5000, weight: "14 oz", packaging: "13x15" },
           { quantity: 10000, weight: "1.9 lb", packaging: "18x20" },
-          { quantity: 50000, weight: "12.5 lb", packaging: "Not Specified" },
-          { quantity: 50000, weight: "4.2 kg", packaging: "28x30", variantNote: "Metric / Bulk" }
+          { quantity: 50000, weight: "4.2 kg", packaging: "28x30" }
         ],
         separated: []
       },
@@ -117,7 +117,6 @@ const CAPSULE_DATA = {
         size: "4",
         label: "Size 4",
         items: [
-          { quantity: 100, weight: "0.3 oz", packaging: "Small Silver" },
           { quantity: 500, weight: "1.4 oz", packaging: "Small Silver" },
           { quantity: 1000, weight: "1.8 oz", packaging: "7x8 Blue" },
           { quantity: 5000, weight: "7.6 oz", packaging: "10x12 Blue" },
@@ -148,6 +147,7 @@ const CAPSULE_DATA = {
     name: "Capsule Depot",
     subtitle: "Standard Capsule Packaging & Weight Specifications",
     badge: "Distribution Partner",
+    bgImage: "assets/capsule-depot-bg.jpg",
     hasSeparated: false,
     note: null,
     sizes: [
@@ -244,6 +244,7 @@ const CAPSULE_DATA = {
     name: "Pet Caps",
     subtitle: "Veterinary & Pet Capsule Packaging Specifications",
     badge: "Veterinary Line",
+    bgImage: "assets/pet-caps-bg.jpg",
     hasSeparated: false,
     note: null,
     sizes: [

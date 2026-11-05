@@ -1,10 +1,11 @@
 /* ============================================================================
    CAPSULE SIZING & PACKAGING REFERENCE HUB
-   3 Professional Non-Generic Design Themes (Zero Neon, Clean Typography)
+   Hub Default: Style 01 (Swiss Clinical)
+   Company Themes: Capsuline, Capsule Depot, Pet Caps (with Logo Backgrounds)
    ============================================================================ */
 
 /* ----------------------------------------------------------------------------
-   THEME 01: SWISS CLINICAL / ARCHITECTURAL GRID (Default)
+   HUB DEFAULT THEME: SWISS CLINICAL / ARCHITECTURAL GRID (Style 01)
    Crisp laboratory paper, deep ink typography, exposed 1px structural borders,
    squared architectural corners, monospace data precision.
    ---------------------------------------------------------------------------- */
@@ -45,92 +46,143 @@
 
   --card-border-width: 1.5px;
   --header-border: 1px solid #2B2F33;
+  --company-bg-image: none;
+  --company-bg-overlay: transparent;
 }
 
 /* ----------------------------------------------------------------------------
-   THEME 02: EXECUTIVE SLATE / INDUSTRIAL DARK
-   Sophisticated dark slate workspace, muted brushed steel surfaces,
-   warm titanium text, subtle bronze/amber operational highlights.
+   CAPSULINE THEME
+   Copied from Capsuline logo artwork: deep navy blue (#062E5B), royal capsule
+   blue (#1B72B8), bright cyan/aqua wave (#48B9D7), and clinical ice-blue tones.
    ---------------------------------------------------------------------------- */
-[data-theme="style-2"] {
+[data-theme="capsuline"] {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  --bg-page: #111418;
-  --bg-surface: #191D23;
-  --bg-surface-alt: #21262E;
-  --bg-surface-hover: #252B34;
-  --bg-elevated: #1F242C;
-  --bg-header: #0C0E12;
-  --text-header: #ECEFF4;
+  --bg-page: #EAF5FA;
+  --bg-surface: rgba(255, 255, 255, 0.86);
+  --bg-surface-alt: rgba(225, 242, 250, 0.88);
+  --bg-surface-hover: rgba(238, 249, 254, 0.95);
+  --bg-elevated: rgba(255, 255, 255, 0.94);
+  --bg-header: linear-gradient(135deg, #05264C 0%, #0B4680 55%, #2B99C8 100%);
+  --text-header: #F4FAFD;
 
-  --text-primary: #ECEFF4;
-  --text-secondary: #A3ABB8;
-  --text-muted: #6C7686;
+  --text-primary: #06264B;
+  --text-secondary: #2E5274;
+  --text-muted: #5C7E9E;
 
-  --accent-primary: #C89B57;
-  --accent-primary-hover: #D6AD6F;
-  --accent-subtle: rgba(200, 155, 87, 0.14);
-  --accent-text: #DFB576;
+  --accent-primary: #0B4680;
+  --accent-primary-hover: #073360;
+  --accent-subtle: rgba(72, 185, 215, 0.20);
+  --accent-text: #083B6E;
 
-  --border-strong: #434C5B;
-  --border-std: #2B313B;
-  --border-subtle: #222730;
-
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
-  --shadow-focus: 0 0 0 2px #C89B57;
-
-  --card-border-width: 1px;
-  --header-border: 1px solid #222730;
-}
-
-/* ----------------------------------------------------------------------------
-   THEME 03: WARM APOTHECARY / EDITORIAL HERITAGE
-   Warm parchment and alabaster tones, refined editorial serif headings,
-   deep botanical forest green & terracotta accents, tactile calm feel.
-   ---------------------------------------------------------------------------- */
-[data-theme="style-3"] {
-  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-
-  --bg-page: #F6F2EA;
-  --bg-surface: #FCFBF8;
-  --bg-surface-alt: #EFE9DD;
-  --bg-surface-hover: #F5EFE4;
-  --bg-elevated: #FFFFFF;
-  --bg-header: #233329;
-  --text-header: #F6F2EA;
-
-  --text-primary: #25231F;
-  --text-secondary: #5A554C;
-  --text-muted: #878073;
-
-  --accent-primary: #2E4F3B;
-  --accent-primary-hover: #213A2B;
-  --accent-subtle: #E4ECE6;
-  --accent-text: #254231;
-
-  --border-strong: #8A8173;
-  --border-std: #DCD4C6;
-  --border-subtle: #EAE3D7;
+  --border-strong: #0B4680;
+  --border-std: #9CCBE0;
+  --border-subtle: #C8E4F0;
 
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
 
-  --shadow-card: 0 2px 10px rgba(45, 38, 28, 0.06);
-  --shadow-hover: 0 8px 22px rgba(45, 38, 28, 0.11);
-  --shadow-focus: 0 0 0 2px #2E4F3B;
+  --shadow-card: 0 4px 18px rgba(6, 38, 75, 0.10);
+  --shadow-hover: 0 8px 26px rgba(6, 38, 75, 0.18);
+  --shadow-focus: 0 0 0 2px #1B72B8;
 
-  --card-border-width: 1px;
-  --header-border: 1px solid #1A271F;
+  --card-border-width: 1.5px;
+  --header-border: 1px solid #1B72B8;
+  --company-bg-image: url("assets/capsuline-bg.jpg");
+  --company-bg-overlay: linear-gradient(180deg, rgba(234, 245, 250, 0.25) 0%, rgba(234, 245, 250, 0.52) 100%);
+}
+
+/* ----------------------------------------------------------------------------
+   CAPSULE DEPOT THEME
+   Copied from Capsule Depot logo artwork: vibrant botanical leaf green (#62B63A),
+   deep depot navy blue (#094776), and aqua-teal wave (#3BB4C6).
+   ---------------------------------------------------------------------------- */
+[data-theme="capsule-depot"] {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --bg-page: #ECF7F0;
+  --bg-surface: rgba(255, 255, 255, 0.86);
+  --bg-surface-alt: rgba(226, 244, 231, 0.88);
+  --bg-surface-hover: rgba(238, 250, 241, 0.95);
+  --bg-elevated: rgba(255, 255, 255, 0.94);
+  --bg-header: linear-gradient(135deg, #07355A 0%, #0A4878 50%, #58AE36 100%);
+  --text-header: #F5FBF7;
+
+  --text-primary: #073052;
+  --text-secondary: #2B594B;
+  --text-muted: #567F72;
+
+  --accent-primary: #52A330;
+  --accent-primary-hover: #3F8422;
+  --accent-subtle: rgba(98, 182, 58, 0.18);
+  --accent-text: #094776;
+
+  --border-strong: #094776;
+  --border-std: #A5D6B0;
+  --border-subtle: #CBE8D1;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 4px 18px rgba(9, 71, 118, 0.10);
+  --shadow-hover: 0 8px 26px rgba(82, 163, 48, 0.20);
+  --shadow-focus: 0 0 0 2px #52A330;
+
+  --card-border-width: 1.5px;
+  --header-border: 1px solid #52A330;
+  --company-bg-image: url("assets/capsule-depot-bg.jpg");
+  --company-bg-overlay: linear-gradient(180deg, rgba(236, 247, 240, 0.25) 0%, rgba(236, 247, 240, 0.52) 100%);
+}
+
+/* ----------------------------------------------------------------------------
+   PET CAPS THEME
+   Copied from PetCaps logo artwork: warm beef-flavor terracotta orange (#C8511B),
+   golden amber/honey yellow (#F4B324), warm cream, and navy accents (#0D345A).
+   ---------------------------------------------------------------------------- */
+[data-theme="pet-caps"] {
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --bg-page: #FFF7E8;
+  --bg-surface: rgba(255, 252, 245, 0.86);
+  --bg-surface-alt: rgba(254, 239, 210, 0.88);
+  --bg-surface-hover: rgba(255, 246, 228, 0.95);
+  --bg-elevated: rgba(255, 253, 249, 0.94);
+  --bg-header: linear-gradient(135deg, #8E310B 0%, #C8511B 52%, #F0AA22 100%);
+  --text-header: #FFFDF9;
+
+  --text-primary: #2B170C;
+  --text-secondary: #6B3A1E;
+  --text-muted: #966040;
+
+  --accent-primary: #C8511B;
+  --accent-primary-hover: #A33E10;
+  --accent-subtle: rgba(244, 179, 36, 0.25);
+  --accent-text: #A83E0F;
+
+  --border-strong: #C8511B;
+  --border-std: #EBC18D;
+  --border-subtle: #F5DEC0;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 4px 18px rgba(142, 49, 11, 0.10);
+  --shadow-hover: 0 8px 26px rgba(200, 81, 27, 0.20);
+  --shadow-focus: 0 0 0 2px #C8511B;
+
+  --card-border-width: 1.5px;
+  --header-border: 1px solid #F0AA22;
+  --company-bg-image: url("assets/pet-caps-bg.jpg");
+  --company-bg-overlay: linear-gradient(180deg, rgba(255, 247, 232, 0.22) 0%, rgba(255, 247, 232, 0.50) 100%);
 }
 
 /* ============================================================================
@@ -156,7 +208,22 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Full-viewport Company Logo Background Layer (active on company tabs) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--company-bg-overlay), var(--company-bg-image);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
 button, input {
@@ -174,10 +241,10 @@ code {
 }
 
 /* ============================================================================
-   TOP HEADER & 3-STYLE SWITCHER
+   TOP HEADER
    ============================================================================ */
 .app-header {
-  background-color: var(--bg-header);
+  background: var(--bg-header);
   color: var(--text-header);
   border-bottom: var(--header-border);
   position: sticky;
@@ -208,8 +275,8 @@ code {
   width: 36px;
   height: 36px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -230,69 +297,7 @@ code {
 
 .brand-meta {
   font-size: 0.75rem;
-  opacity: 0.7;
-}
-
-/* Style Switcher Controls */
-.style-switcher-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.switcher-label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  opacity: 0.75;
-  font-weight: 500;
-}
-
-.style-switcher {
-  display: inline-flex;
-  background: rgba(255, 255, 255, 0.07);
-  padding: 3px;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  gap: 3px;
-}
-
-.style-btn {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.72);
-  padding: 0.42rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  transition: all 0.15s ease;
-}
-
-.style-btn:hover {
-  color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.style-btn.active {
-  background: #FFFFFF;
-  color: #141618;
-  font-weight: 600;
-}
-
-[data-theme="style-2"] .style-btn.active {
-  background: var(--accent-primary);
-  color: #111418;
-}
-
-.style-num {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 /* ============================================================================
@@ -610,6 +615,17 @@ code {
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
+  padding: 1.35rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: var(--card-border-width) solid var(--border-std);
+  background-color: var(--bg-surface);
+  background-image:
+    linear-gradient(90deg, var(--bg-surface) 0%, rgba(255, 255, 255, 0.72) 48%, rgba(255, 255, 255, 0.35) 100%),
+    var(--company-bg-image);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
 }
 
 .company-title-group {
@@ -724,6 +740,7 @@ code {
   padding: 1.15rem 1.25rem;
   margin-bottom: 1.5rem;
   box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
 }
 
 [data-theme="style-1"] .search-control-panel {
@@ -841,10 +858,6 @@ code {
   border-radius: var(--radius-sm);
 }
 
-[data-theme="style-2"] .parsed-badge {
-  color: #111418;
-}
-
 /* ============================================================================
    MODE STATUS BAR (Dedicated Size / Isolated Quantity Navigation)
    ============================================================================ */
@@ -859,6 +872,7 @@ code {
   border-radius: var(--radius-md);
   margin-bottom: 1.25rem;
   flex-wrap: wrap;
+  backdrop-filter: blur(8px);
 }
 
 .mode-status-left {
@@ -899,10 +913,6 @@ code {
   border: 1px solid var(--accent-primary);
 }
 
-[data-theme="style-2"] .primary-action-btn {
-  color: #111418;
-}
-
 .primary-action-btn:hover {
   background-color: var(--accent-primary-hover);
 }
@@ -934,6 +944,7 @@ code {
   box-shadow: var(--shadow-card);
   overflow: hidden;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  backdrop-filter: blur(8px);
 }
 
 [data-theme="style-1"] .size-row-card {
@@ -1029,10 +1040,6 @@ code {
   border-color: var(--accent-primary);
 }
 
-[data-theme="style-2"] .size-row-main-click:hover .open-dedicated-pill {
-  color: #111418;
-}
-
 /* Side Arrow Dropdown Button */
 .size-dropdown-arrow-btn {
   width: 64px;
@@ -1061,10 +1068,6 @@ code {
 .size-row-card.expanded .size-dropdown-arrow-btn {
   background-color: var(--accent-primary);
   color: #FFFFFF;
-}
-
-[data-theme="style-2"] .size-row-card.expanded .size-dropdown-arrow-btn {
-  color: #111418;
 }
 
 .size-row-card.expanded .size-dropdown-arrow-btn .chevron-svg {
@@ -1234,6 +1237,7 @@ code {
   border-radius: var(--radius-lg);
   padding: 1.75rem;
   box-shadow: var(--shadow-card);
+  backdrop-filter: blur(8px);
 }
 
 [data-theme="style-1"] .dedicated-size-container {
@@ -1329,10 +1333,6 @@ code {
   border-color: var(--accent-primary);
 }
 
-[data-theme="style-2"] .dedicated-qty-row:hover .d-col-action {
-  color: #111418;
-}
-
 /* ============================================================================
    ISOLATED SINGLE QUANTITY FOCUS VIEW ("the only one I'll be looking at")
    ============================================================================ */
@@ -1347,6 +1347,7 @@ code {
   border-radius: var(--radius-lg);
   padding: 2.25rem;
   box-shadow: var(--shadow-hover);
+  backdrop-filter: blur(10px);
 }
 
 .isolated-top-tag {
